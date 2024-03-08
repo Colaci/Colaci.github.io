@@ -220,7 +220,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2024/02/06/yuan/" target="_self">
         <div>
-          该本子为希斯拉德个人向无料同人本，以希斯拉德在剧情中的故事出发写作。本子是在晓月秘话最新话出来之前写的，部分冲突的内容已经稍作修改，介意的话可以直接跳过。文中没有cp向描写，均为cb向，主要是以希斯拉德为主视角的古代三人组的友情向描写，如果有任何不适的话请立即关上本子逃走! 第一章“局长，今天你所有工作都做完了呢！”穿着黑袍的秘书整理着最后的资料，并将它们分门别类放进旁边的管理柜里。坐在办公桌前的
+          该本子为希斯拉德个人向无料同人本，以希斯拉德在剧情中的故事出发写作。本子是在晓月秘话最新话出来之前写的，部分冲突的内容已经稍作修改，介意的话可以直接跳过。文中没有cp向描写，均为cb向，主要是以希斯拉德为主视角的古代三人组的友情向描写，如果有任何不适的话请立即关上本子逃走!  第一章“局长，今天你所有工作都做完了呢！”穿着黑袍的秘书整理着最后的资料，并将它们分门别类放进旁边的管理柜里。坐在办公桌
         </div>
       </a>
 
@@ -355,7 +355,37 @@
       }
       var text = subtitle.getAttribute('data-typed-text');
       
-        typing(text);
+        jQuery.ajax({
+          type: 'GET',
+          url: 'https://cultist-quote.vercel.app/api/getTypperStr',
+          headers: {},
+          dataType: 'json',
+          success: function(result) {
+            var apiText;
+            if (result) {
+              var keys = 'data'.split(',');
+              if (result instanceof Array) {
+                result = result[0];
+              }
+              for (const k of keys) {
+                var value = result[k];
+                if (typeof value === 'string') {
+                  apiText = value;
+                  break;
+                } else if (value instanceof Object) {
+                  result = value;
+                }
+              }
+            }
+            apiText ? typing(apiText) : typing(text);
+          },
+          error: function(xhr, status, error) {
+            if (error) {
+              console.error('Failed to request https://cultist-quote.vercel.app/api/getTypperStr:', error);
+            }
+            typing(text);
+          }
+        })
       
     })(window, document);
   </script>
