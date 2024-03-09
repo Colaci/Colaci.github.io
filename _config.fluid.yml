@@ -484,7 +484,8 @@ index:
 
       # 请求地址
       # Request url
-      url: "https://cultist-quote.vercel.app/api/getTypperStr"
+      url: "
+https://cultist-quote.zeabur.app/api/getTypperStr"
 
       # 请求方法
       # Request method
